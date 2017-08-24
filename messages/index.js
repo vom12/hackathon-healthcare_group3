@@ -8,6 +8,8 @@ var builder = require("botbuilder");
 var botbuilder_azure = require("botbuilder-azure");
 var path = require('path');
 
+var test = ["Choice1","Choice2"];
+
 var useEmulator = (process.env.NODE_ENV == 'development');
 
 var connector = useEmulator ? new builder.ChatConnector() : new botbuilder_azure.BotServiceConnector({
@@ -22,7 +24,8 @@ bot.localePath(path.join(__dirname, './locale'));
 
 bot.dialog('/', [
     function (session) {
-        builder.Prompts.text(session, "Hello... What's your name?");
+        //builder.Prompts.text(session, "Hello... What's your name?");
+        builder.Prompts.choice(session, "Select", test)
     },
     function (session, results) {
         session.userData.name = results.response;
